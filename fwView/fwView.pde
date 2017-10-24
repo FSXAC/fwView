@@ -9,11 +9,11 @@ void setup() {
     cam.setMaximumDistance(500);
     
     // Setup gui
-    gui();
+    createGUI();
 }
 
 void draw() {
-    background(0);
+    background(250);
     drawTestObjs();
 }
 
@@ -27,4 +27,6 @@ void drawTestObjs() {
     fill(0, 0, 255);
     box(5);
     popMatrix();
+    
+    displayGUI();
 }
