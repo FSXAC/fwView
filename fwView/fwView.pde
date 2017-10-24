@@ -7,6 +7,9 @@ void setup() {
     cam = new PeasyCam(this, 100);
     cam.setMinimumDistance(1);
     cam.setMaximumDistance(500);
+    
+    // Setup gui
+    gui();
 }
 
 void draw() {
