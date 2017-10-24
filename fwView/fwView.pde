@@ -1,32 +1,44 @@
 import peasy.*;
-
-PeasyCam cam;
+import peasy.org.apache.commons.math.*;
+import peasy.org.apache.commons.math.geometry.*;
 
 void setup() {
     size(1280, 800, P3D);
-    cam = new PeasyCam(this, 100);
-    cam.setMinimumDistance(1);
-    cam.setMaximumDistance(500);
     
+    // Setup 3D camera
+    createCam();
+     
     // Setup gui
     createGUI();
 }
 
 void draw() {
-    background(250);
+    background(200);
+    rotateX(PI/2);
+    drawTestAxes();
     drawTestObjs();
+    displayGUI();
 }
 
 void drawTestObjs() {
-    rotateX(-.5);
-    rotateY(-.5);
-    fill(255, 0, 0);
-    box(30);
-    pushMatrix();
-    translate(0, 0, 20);
-    fill(0, 0, 255);
-    box(5);
-    popMatrix();
-    
-    displayGUI();
+    drawTestLights();
+    fill(255, 255, 255);
+    noStroke();
+    rectMode(CENTER);
+    rect(0, 0, 100, 100);
+}
+
+void drawTestAxes() {
+    strokeWeight(3);
+    stroke(255, 0, 0);
+    line(0, 0, 0, 10, 0, 0);
+    stroke(0, 255, 0);
+    line(0, 0, 0, 0, 10, 0);
+    stroke(0, 0, 255);
+    line(0, 0, 0, 0, 0, 10);
+}
+
+void drawTestLights() {
+    pointLight(255, 255, 255, 0, 0, 200);
+    directionalLight(250, 200, 170, 1, 0.3, 0.2);
 }

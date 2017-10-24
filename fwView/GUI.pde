@@ -63,16 +63,3 @@ public void displayGUI() {
     cp5.draw();
     cam.endHUD();
 }
-
-// GUI Handlers
-public void pbPlay() {
-}
-
-public void pbPause() {
-}
-
-public void pbReset() {
-}
-
-public void setPlayback(final float val) {
-}
