@@ -53,12 +53,13 @@ public class Robot {
     void draw() {
         pushMatrix();
         
-        translate(this.x, this.y, 0);
+        // TODO: figure out what the units for x and y actually are
+        translate(meterToPx(this.x / 10), meterToPx(this.y / 10), meterToPx(0.1));
         rotateZ(this.heading);
         
         fill(#88FF88);
         stroke(0);
-        box(10);
+        box(meterToPx(0.2));
         
         popMatrix();
         

@@ -2,6 +2,17 @@ import peasy.*;
 import peasy.org.apache.commons.math.*;
 import peasy.org.apache.commons.math.geometry.*;
 
+final float PX_PER_METER = 100;
+public float pxToMeter(float px) {
+    return px/PX_PER_METER;
+}
+
+public float meterToPx(float m) {
+    return m * PX_PER_METER;
+}
+
+Robot robot;
+
 void setup() {
     size(1280, 800, P3D);
     
@@ -11,8 +22,14 @@ void setup() {
     // Setup gui
     createGUI();
     
+    // Create test robot
+    robot = new Robot("dummy");
+    
     // Loading simulation data
-    loadCSV("test");
+    Table simData = loadCSV("test");
+    
+    // Load simulation data into robot
+    robot.populateSim(simData);
 }
 
 void draw() {
@@ -20,6 +37,9 @@ void draw() {
     rotateX(PI/2);
     drawTestAxes();
     drawTestObjs();
+    
+    robot.draw();
+    
     displayGUI();
 }
 
@@ -28,17 +48,16 @@ void drawTestObjs() {
     fill(255, 255, 255);
     noStroke();
     rectMode(CENTER);
-    rect(0, 0, 100, 100);
+    rect(0, 0, meterToPx(10), meterToPx(10));
 }
 
 void drawTestAxes() {
-    strokeWeight(3);
     stroke(255, 0, 0);
-    line(0, 0, 0, 10, 0, 0);
+    line(0, 0, 0, meterToPx(1), 0, 0);
     stroke(0, 255, 0);
-    line(0, 0, 0, 0, 10, 0);
+    line(0, 0, 0, 0, meterToPx(1), 0);
     stroke(0, 0, 255);
-    line(0, 0, 0, 0, 0, 10);
+    line(0, 0, 0, 0, 0, meterToPx(1));
 }
 
 void drawTestLights() {
