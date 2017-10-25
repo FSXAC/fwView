@@ -10,6 +10,9 @@ void setup() {
      
     // Setup gui
     createGUI();
+    
+    // Loading simulation data
+    loadCSV("test");
 }
 
 void draw() {
