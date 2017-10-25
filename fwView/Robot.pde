@@ -6,14 +6,27 @@ public class Robot {
     float[] velocityYs;
     float[] angularVs;
     
-    int time = 0;
+    int frame;
+    int frames;
+    String name;
     
-    Robot() {
+    float x;
+    float y;
+    float heading;
+    
+    Robot(String name) {
+        frame = 0;
+        frames = 0;
+        this.name = name;
         
+        x = 0;
+        y = 0;
+        heading = 0;
     }
     
     void populateSim(Table tb) {
         int frames = tb.getRowCount();
+        this.frames = frames;
         
         positionXs = new float[frames];
         positionYs = new float[frames];
@@ -34,6 +47,26 @@ public class Robot {
                 
                 currentRow++;
             }
+        }
+    }
+    
+    void draw() {
+        pushMatrix();
+        
+        translate(this.x, this.y, 0);
+        rotateZ(this.heading);
+        
+        fill(#88FF88);
+        stroke(0);
+        box(10);
+        
+        popMatrix();
+        
+        if (frame < this.frames) {
+            this.x = this.positionXs[frame];
+            this.y = this.positionYs[frame];
+            this.heading = this.headings[frame];
+            frame++;
         }
     }
 }
