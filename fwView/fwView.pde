@@ -23,7 +23,7 @@ void setup() {
     createGUI();
     
     // Create test robot
-    robot = new Robot("dummy");
+    robot = new Robot("test robot");
     
     // Loading simulation data
     Table simData = loadCSV("test");
@@ -52,6 +52,7 @@ void drawTestObjs() {
 }
 
 void drawTestAxes() {
+    strokeWeight(1);
     stroke(255, 0, 0);
     line(0, 0, 0, meterToPx(1), 0, 0);
     stroke(0, 255, 0);
@@ -61,6 +62,6 @@ void drawTestAxes() {
 }
 
 void drawTestLights() {
-    pointLight(255, 255, 255, 0, 0, 200);
-    directionalLight(250, 200, 170, 1, 0.3, 0.2);
+    directionalLight(240, 220, 180, 0, 0.3, -1);
+    ambientLight(90, 130, 160);
 }
