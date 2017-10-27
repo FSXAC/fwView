@@ -13,6 +13,9 @@ public float meterToPx(float m) {
 
 Robot robot;
 
+// global states
+boolean PLAYING = true;
+
 void setup() {
     size(1280, 800, P3D);
     

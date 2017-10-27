@@ -85,7 +85,9 @@ public class Robot {
         drawTrail();
         drawSpeedVector();
         
-        this.update();
+        if (PLAYING) {
+            this.update();
+        }
     }
     
     public void update() {
