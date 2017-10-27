@@ -1,4 +1,5 @@
 public class Robot {
+    float[] times;
     float[] positionXs;
     float[] positionYs;
     float[] headings;
@@ -14,6 +15,8 @@ public class Robot {
     float y;
     float heading;
     
+    int startTime;
+    
     Robot(String name) {
         frame = 0;
         frames = 0;
@@ -22,12 +25,15 @@ public class Robot {
         x = 0;
         y = 0;
         heading = 0;
+        
+        startTime = millis();
     }
     
     void populateSim(Table tb) {
         int frames = tb.getRowCount();
         this.frames = frames;
         
+        times = new float[frames];
         positionXs = new float[frames];
         positionYs = new float[frames];
         headings = new float[frames];
@@ -38,6 +44,7 @@ public class Robot {
         int currentRow = 0;
         for (TableRow row : tb.rows()) {
             if (row.getString("TYPE").equals("SIM")) {
+                times[currentRow] = row.getFloat("TIME");
                 positionXs[currentRow] = row.getFloat("X");
                 positionYs[currentRow] = row.getFloat("Y");
                 headings[currentRow] = row.getFloat("THETA");
@@ -56,7 +63,6 @@ public class Robot {
     public void draw() {
         pushMatrix();
         
-        // TODO: figure out what the units for x and y actually are
         // x and y are in meters
         translate(meterToPx(this.x), meterToPx(this.y), meterToPx(0.1));
         rotateZ(this.heading);
@@ -79,11 +85,19 @@ public class Robot {
         drawTrail();
         drawSpeedVector();
         
+        this.update();
+    }
+    
+    public void update() {
         if (frame < this.frames) {
-            this.x = this.positionXs[frame];
-            this.y = this.positionYs[frame];
-            this.heading = this.headings[frame];
-            frame++;
+            int elapsedTime = millis() - startTime;
+            if (this.times[frame] * 1000 <= elapsedTime) {
+            //if (true) {
+                this.x = this.positionXs[frame];
+                this.y = this.positionYs[frame];
+                this.heading = this.headings[frame];
+                frame++;
+            }
         }
     }
     
@@ -118,5 +132,6 @@ public class Robot {
         this.x = 0;
         this.y = 0;
         this.heading = 0;
+        this.startTime = millis();
     }
 }
