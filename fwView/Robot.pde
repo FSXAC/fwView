@@ -48,13 +48,17 @@ public class Robot {
                 currentRow++;
             }
         }
+        
+        println(this.positionXs.length);
+        println(this.velocityXs.length);
     }
     
     public void draw() {
         pushMatrix();
         
         // TODO: figure out what the units for x and y actually are
-        translate(this.x, this.y, meterToPx(0.1));
+        // x and y are in meters
+        translate(meterToPx(this.x), meterToPx(this.y), meterToPx(0.1));
         rotateZ(this.heading);
         
         pushMatrix();
@@ -73,6 +77,7 @@ public class Robot {
         popMatrix();
         
         drawTrail();
+        drawSpeedVector();
         
         if (frame < this.frames) {
             this.x = this.positionXs[frame];
@@ -88,12 +93,24 @@ public class Robot {
         stroke(150);
         for (int i = 0; i < frame; i++) {
             if (i == 0) {
-                line(0, 0, 0, this.positionXs[i], this.positionYs[i], 0);
+                line(0, 0, 0, meterToPx(this.positionXs[i]), meterToPx(this.positionYs[i]), 0);
             } else {
-                line(this.positionXs[i - 1], this.positionYs[i - 1], 0,
-                this.positionXs[i], this.positionYs[i], 0);
+                line(meterToPx(this.positionXs[i - 1]), meterToPx(this.positionYs[i - 1]), 0,
+                meterToPx(this.positionXs[i]), meterToPx(this.positionYs[i]), 0);
             }
         }
+    }
+    
+    // Draw vectors such as speed or rotation
+    public void drawSpeedVector() {
+        pushMatrix();
+        translate(meterToPx(this.x), meterToPx(this.y), meterToPx(0.1));
+        strokeWeight(5);
+        stroke(#4499FF);
+        
+        int lastFrame = frame >= this.frames ? this.frames-1: frame;
+        line(0, 0, 0, meterToPx(this.velocityXs[lastFrame]), meterToPx(this.velocityYs[lastFrame]), 0);
+        popMatrix();
     }
     
     public void reset() {
