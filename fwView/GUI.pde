@@ -59,8 +59,5 @@ public void createGUI() {
 
 public void displayGUI() {
     noLights();
-    cam.beginHUD();
     cp5.draw();
-    text(millis()/1000, 20, 20);
-    cam.endHUD();
 }

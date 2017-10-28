@@ -29,7 +29,7 @@ void setup() {
     robot = new Robot("test robot");
     
     // Loading simulation data
-    Table simData = loadCSV("test");
+    Table simData = loadCSV("data");
     
     // Load simulation data into robot
     robot.populateSim(simData);
@@ -37,13 +37,13 @@ void setup() {
 
 void draw() {
     background(200);
-    rotateX(PI/2);
+    //rotateX(PI/2);
     drawTestAxes();
     drawTestObjs();
     
     robot.draw();
     
-    displayGUI();
+    drawHUD();
 }
 
 void drawTestObjs() {
@@ -67,4 +67,10 @@ void drawTestAxes() {
 void drawTestLights() {
     directionalLight(240, 220, 180, 0, 0.3, -1);
     ambientLight(90, 130, 160);
+}
+
+void drawHUD() {
+    cam.beginHUD();
+    displayGUI();
+    cam.endHUD();
 }
