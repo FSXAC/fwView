@@ -15,6 +15,7 @@ Robot robot;
 
 // global states
 boolean PLAYING = true;
+boolean REAL_SPEED = false;
 
 void setup() {
     size(1280, 800, P3D);
@@ -52,6 +53,13 @@ void drawTestObjs() {
     noStroke();
     rectMode(CENTER);
     rect(0, 0, meterToPx(10), meterToPx(10));
+    
+    // draw some grids
+    stroke(200);
+    for (int x = -5; x <= 5; x++) {
+        line(meterToPx(x), meterToPx(-5), meterToPx(x), meterToPx(5));
+        line(meterToPx(-5), meterToPx(x), meterToPx(5), meterToPx(x));
+    }
 }
 
 void drawTestAxes() {

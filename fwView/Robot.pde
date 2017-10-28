@@ -93,8 +93,7 @@ public class Robot {
     public void update() {
         if (frame < this.frames) {
             int elapsedTime = millis() - startTime;
-            if (this.times[frame] * 1000 <= elapsedTime) {
-            //if (true) {
+            if (this.times[frame] * 1000 <= elapsedTime || !REAL_SPEED) {
                 this.x = this.positionXs[frame];
                 this.y = this.positionYs[frame];
                 this.heading = this.headings[frame];
