@@ -66,24 +66,12 @@ public class Robot {
         // x and y are in meters
         translate(meterToPx(this.x), meterToPx(this.y), meterToPx(0.1));
         rotateZ(this.heading);
-        
-        pushMatrix();
-        rotateX(-HALF_PI);
-        textAlign(CENTER, CENTER);
-        fill(50);
-        text(this.name, 0, -20);
-        popMatrix();
-        
-        //fill(#88FF88);
-        noFill();
-        //noStroke();
-        stroke(0);
-        box(meterToPx(0.2));
-        
+        drawRobot();
         popMatrix();
         
         drawTrail();
         drawSpeedVector();
+        drawAngularVector();
         
         if (PLAYING) {
             this.update();
@@ -100,6 +88,19 @@ public class Robot {
                 frame++;
             }
         }
+    }
+    
+    public void drawRobot() {
+        box(meterToPx(0.18));
+        translate(20, 0, 0);
+        beginShape();
+        fill(#FF9944);
+        noStroke();
+        vertex(0, 0);
+        vertex(-5, -5);
+        vertex(30, 0);
+        vertex(-5, 5);
+        endShape(CLOSE);
     }
     
     // Probably not the best way to do it
@@ -125,6 +126,18 @@ public class Robot {
         
         int lastFrame = frame >= this.frames ? this.frames-1: frame;
         line(0, 0, 0, meterToPx(this.velocityXs[lastFrame]), meterToPx(this.velocityYs[lastFrame]), 0);
+        popMatrix();
+    }
+    
+    public void drawAngularVector() {
+        pushMatrix();
+        translate(meterToPx(this.x), meterToPx(this.y), meterToPx(0.07));
+        rotateZ(this.heading);
+        strokeWeight(5);
+        stroke(#66FF66);
+        noFill();
+        int lastFrame = frame >= this.frames ? this.frame-1: frame;
+        arc(0, 0, meterToPx(0.5), meterToPx(0.5), 0, constrain(angularVs[lastFrame], 0, PI/2));
         popMatrix();
     }
     
