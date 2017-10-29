@@ -35,7 +35,7 @@ void setup() {
     robot = new Robot("test robot");
     
     // Loading simulation data
-    Table simData = loadCSV("data");
+    Table simData = loadCSV("test");
     
     // Load simulation data into robot
     robot.populateSim(simData);
@@ -85,5 +85,8 @@ void drawTestLights() {
 void drawHUD() {
     cam.beginHUD();
     displayGUI();
+    fill(20);
+    textSize(12);
+    text("Time: " + String.format("%.1f", robot.getTime()) + "s", 20, 20);
     cam.endHUD();
 }

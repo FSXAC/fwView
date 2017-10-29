@@ -17,6 +17,8 @@ public class Robot {
     
     int startTime;
     
+    boolean hasData;
+    
     Robot(String name) {
         frame = 0;
         frames = 0;
@@ -27,6 +29,8 @@ public class Robot {
         heading = 0;
         
         startTime = millis();
+        
+        hasData = false;
     }
     
     void populateSim(Table tb) {
@@ -56,11 +60,23 @@ public class Robot {
             }
         }
         
+        if (this.positionXs.length != 0) {
+            this.hasData = true;
+        }
+        
         println(this.positionXs.length);
-        println(this.velocityXs.length);
     }
     
     public void draw() {
+        if (!hasData) {
+            pushMatrix();
+            fill(255, 0, 0);
+            translate(0, 0, 50);
+            scale(3);
+            text("No test.csv found", 0, 0);
+            popMatrix();
+        }
+        
         pushMatrix();
         
         // x and y are in meters
@@ -69,12 +85,14 @@ public class Robot {
         drawRobot();
         popMatrix();
         
-        if (DRAW_TRAIL) drawTrail();
-        if (DRAW_VEL_IND) drawSpeedVector();
-        if (DRAW_AVL_IND) drawAngularVector();
-        
-        if (PLAYING) {
-            this.update(true);
+        if (this.hasData) {
+            if (DRAW_TRAIL) drawTrail();
+            if (DRAW_VEL_IND) drawSpeedVector();
+            if (DRAW_AVL_IND) drawAngularVector();
+            
+            if (PLAYING) {
+                this.update(true);
+            }
         }
     }
     
@@ -92,6 +110,7 @@ public class Robot {
     }
     
     public void drawRobot() {
+        stroke(0);
         box(meterToPx(0.18));
         translate(13, 0, 0);
         beginShape();
@@ -109,9 +128,7 @@ public class Robot {
         strokeWeight(4);
         stroke(150);
         for (int i = 0; i < frame; i++) {
-            if (i == 0) {
-                line(0, 0, 0, meterToPx(this.positionXs[i]), meterToPx(this.positionYs[i]), 0);
-            } else {
+            if (i > 0) {
                 line(meterToPx(this.positionXs[i - 1]), meterToPx(this.positionYs[i - 1]), 0,
                 meterToPx(this.positionXs[i]), meterToPx(this.positionYs[i]), 0);
             }
@@ -154,7 +171,16 @@ public class Robot {
         return this.frame;
     }
     
+    public float getTime() {
+        if (!hasData) return 0;
+        
+        int lastFrame = frame >= this.frames ? this.frame-1: frame;
+        return this.times[lastFrame];
+    }
+    
     public void setFrame(int frame) {
+        if (!hasData) return;
+        
         println(frame);
         if (frame < 0) frame = 0;
         if (frame > frames) frame = frames;
