@@ -15,7 +15,7 @@ Robot robot;
 
 // global states
 boolean PLAYING = true;
-boolean REAL_SPEED = true;
+boolean REAL_SPEED = false;
 
 boolean DRAW_ORIGIN = true;
 boolean DRAW_VEL_IND = true;
