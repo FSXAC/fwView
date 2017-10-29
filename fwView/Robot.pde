@@ -69,37 +69,38 @@ public class Robot {
         drawRobot();
         popMatrix();
         
-        drawTrail();
-        drawSpeedVector();
-        drawAngularVector();
+        if (DRAW_TRAIL) drawTrail();
+        if (DRAW_VEL_IND) drawSpeedVector();
+        if (DRAW_AVL_IND) drawAngularVector();
         
         if (PLAYING) {
-            this.update();
+            this.update(true);
         }
     }
     
-    public void update() {
+    public void update(Boolean incrementFrames) {
         if (frame < this.frames) {
             int elapsedTime = millis() - startTime;
             if (this.times[frame] * 1000 <= elapsedTime || !REAL_SPEED) {
                 this.x = this.positionXs[frame];
                 this.y = this.positionYs[frame];
                 this.heading = this.headings[frame];
-                frame++;
+                
+                if (incrementFrames) frame++;
             }
         }
     }
     
     public void drawRobot() {
         box(meterToPx(0.18));
-        translate(20, 0, 0);
+        translate(13, 0, 0);
         beginShape();
         fill(#FF9944);
         noStroke();
         vertex(0, 0);
-        vertex(-5, -5);
-        vertex(30, 0);
-        vertex(-5, 5);
+        vertex(-2, -5);
+        vertex(10, 0);
+        vertex(-2, 5);
         endShape(CLOSE);
     }
     
@@ -131,7 +132,7 @@ public class Robot {
     
     public void drawAngularVector() {
         pushMatrix();
-        translate(meterToPx(this.x), meterToPx(this.y), meterToPx(0.07));
+        translate(meterToPx(this.x), meterToPx(this.y), meterToPx(0.12));
         rotateZ(this.heading);
         strokeWeight(5);
         stroke(#66FF66);
@@ -147,5 +148,18 @@ public class Robot {
         this.y = 0;
         this.heading = 0;
         this.startTime = millis();
+    }
+    
+    public int getFrame() {
+        return this.frame;
+    }
+    
+    public void setFrame(int frame) {
+        println(frame);
+        if (frame < 0) frame = 0;
+        if (frame > frames) frame = frames;
+        this.frame = frame;
+        
+        this.update(false);
     }
 }

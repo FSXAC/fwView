@@ -15,7 +15,12 @@ Robot robot;
 
 // global states
 boolean PLAYING = true;
-boolean REAL_SPEED = false;
+boolean REAL_SPEED = true;
+
+boolean DRAW_ORIGIN = true;
+boolean DRAW_VEL_IND = true;
+boolean DRAW_AVL_IND = true;
+boolean DRAW_TRAIL = true;
 
 void setup() {
     size(1280, 800, P3D);
@@ -38,8 +43,7 @@ void setup() {
 
 void draw() {
     background(200);
-    //rotateX(PI/2);
-    drawTestAxes();
+    if (DRAW_ORIGIN) drawTestAxes();
     drawTestObjs();
     
     robot.draw();
@@ -56,6 +60,7 @@ void drawTestObjs() {
     
     // draw some grids
     stroke(200);
+    strokeWeight(1);
     for (int x = -5; x <= 5; x++) {
         line(meterToPx(x), meterToPx(-5), meterToPx(x), meterToPx(5));
         line(meterToPx(-5), meterToPx(x), meterToPx(5), meterToPx(x));
@@ -63,7 +68,7 @@ void drawTestObjs() {
 }
 
 void drawTestAxes() {
-    strokeWeight(1);
+    strokeWeight(3);
     stroke(255, 0, 0);
     line(0, 0, 0, meterToPx(1), 0, 0);
     stroke(0, 255, 0);
